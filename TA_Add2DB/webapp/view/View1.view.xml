@@ -29,11 +29,19 @@
 													<Input width="50%" id="inputAdresse"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											<sap.ui.layout.form:FormElement label="Tele.Nummer" id="elementtele">
+											
+											<sap.ui.layout.form:FormElement label="Email" id="elementEmail">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputEmail"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											
+											<sap.ui.layout.form:FormElement label="Tele.Nummer" id="elementTele">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputTele"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
+											
 										</sap.ui.layout.form:formElements>
 									</sap.ui.layout.form:FormContainer>
 								</sap.ui.layout.form:formContainers>
@@ -42,6 +50,9 @@
 								</sap.ui.layout.form:layout>
 							</sap.ui.layout.form:Form>
 						</content>
+						<Toolbar height="3rem">
+						<Button icon="sap-icon://add" text="Pack Item" type="Emphasized" press="onAdd"/>
+						</Toolbar>
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Header Info" width="auto" class="sapUiResponsiveMargin">
 						<content></content>
