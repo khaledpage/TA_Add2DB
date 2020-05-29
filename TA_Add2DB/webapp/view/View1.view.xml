@@ -16,7 +16,7 @@
 											</sap.ui.layout.form:FormElement>
 											<sap.ui.layout.form:FormElement label="Vorname" id="elementVorname">
 												<sap.ui.layout.form:fields>
-													<Input width="50%" id="inputVornme"/>
+													<Input width="50%" id="inputVorname"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
 											<sap.ui.layout.form:FormElement label="PLZ" id="elementPlz">
@@ -55,7 +55,7 @@
 						</Toolbar>
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Header Info" width="auto" class="sapUiResponsiveMargin">
-						<content></content>
+					
 					</Panel>
 				</Page>
 			</pages>
