@@ -1,0 +1,53 @@
+<mvc:View controllerName="TA_logistik.TA_Add2DB.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<Panel expandable="true" expanded="false" headerText="neuer Benutzer" width="auto" class="sapUiResponsiveMargin">
+						<content>
+							<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="__form1">
+								<sap.ui.layout.form:formContainers>
+									<sap.ui.layout.form:FormContainer id="__container1">
+										<sap.ui.layout.form:formElements>
+											<sap.ui.layout.form:FormElement label="Name" id="elementName">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputName"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											<sap.ui.layout.form:FormElement label="Vorname" id="elementVorname">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputVornme"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											<sap.ui.layout.form:FormElement label="PLZ" id="elementPlz">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputPLZ"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											<sap.ui.layout.form:FormElement label="Adresse" id="elementAdresse">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputAdresse"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											<sap.ui.layout.form:FormElement label="Tele.Nummer" id="elementtele">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputTele"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+										</sap.ui.layout.form:formElements>
+									</sap.ui.layout.form:FormContainer>
+								</sap.ui.layout.form:formContainers>
+								<sap.ui.layout.form:layout>
+									<sap.ui.layout.form:ResponsiveGridLayout id="__layout1"/>
+								</sap.ui.layout.form:layout>
+							</sap.ui.layout.form:Form>
+						</content>
+					</Panel>
+					<Panel expandable="true" expanded="false" headerText="Header Info" width="auto" class="sapUiResponsiveMargin">
+						<content></content>
+					</Panel>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
