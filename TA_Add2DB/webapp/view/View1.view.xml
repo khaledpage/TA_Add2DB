@@ -9,11 +9,19 @@
 								<sap.ui.layout.form:formContainers>
 									<sap.ui.layout.form:FormContainer id="__container1">
 										<sap.ui.layout.form:formElements>
+											
+												<sap.ui.layout.form:FormElement label="ID" id="elementID">
+												<sap.ui.layout.form:fields>
+													<Input width="50%" id="inputID"/>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											
 											<sap.ui.layout.form:FormElement label="Name" id="elementName">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputName"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
+											
 											<sap.ui.layout.form:FormElement label="Vorname" id="elementVorname">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputVorname"/>
@@ -53,8 +61,11 @@
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Kunden" width="auto" class="sapUiResponsiveMargin">
 						<content>
-							<Table items="{/Users}">
+							<Table id="packItem"  items="{/Users}">
 								<columns>
+									<Column width="12em">
+										<Text text="ID"/>
+									</Column>
 									<Column width="12em">
 										<Text text="Name"/>
 									</Column>
@@ -75,7 +86,8 @@
 								<items>
 									<ColumnListItem>
 										<cells>
-											<ObjectIdentifier title="{name}" text="{ProductId}" class="sapMTableContentMargin"/>
+											<ObjectIdentifier  text="{ID}" class="sapMTableContentMargin"/>
+												<Text text="{name}"/>
 											<Text text="{vorname}"/>
 											<Text text="{postzahl}"/>
 											<Text text="{adresse}"/>
