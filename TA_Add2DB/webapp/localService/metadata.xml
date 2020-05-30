@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+	<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml"
+		xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+		<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</edmx:Reference>
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema Namespace="CatalogService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+				<EntitySet Name="Pakets" EntityType="CatalogService.Pakets"/>
+				<EntitySet Name="Users" EntityType="CatalogService.Users"/>
+				<AssociationSet Name="Pakets_user" Association="CatalogService.Pakets_user">
+					<End Role="Pakets" EntitySet="Pakets"/>
+					<End Role="Users" EntitySet="Users"/>
+				</AssociationSet>
+			</EntityContainer>
+			<EntityType Name="Pakets">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="status" Type="Edm.String"/>
+				<NavigationProperty Name="user" Relationship="CatalogService.Pakets_user" FromRole="Pakets" ToRole="Users"/>
+				<Property Name="stock" Type="Edm.Int32"/>
+				<Property Name="note" Type="Edm.String"/>
+				<Property Name="user_ID" Type="Edm.Int32"/>
+			</EntityType>
+			<EntityType Name="Users">
+				<Key>
+					<PropertyRef Name="ID"/>
+				</Key>
+				<Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+				<Property Name="name" Type="Edm.String"/>
+				<Property Name="vorname" Type="Edm.String"/>
+				<Property Name="postzahl" Type="Edm.String"/>
+				<Property Name="adresse" Type="Edm.String"/>
+				<Property Name="email" Type="Edm.String"/>
+				<Property Name="teleNummer" Type="Edm.String"/>
+				<NavigationProperty Name="packets" Relationship="CatalogService.Pakets_user" FromRole="Users" ToRole="Pakets"/>
+			</EntityType>
+			<Association Name="Pakets_user">
+				<End Role="Pakets" Type="CatalogService.Pakets" Multiplicity="*"/>
+				<End Role="Users" Type="CatalogService.Users" Multiplicity="0..1"/>
+				<ReferentialConstraint>
+					<Principal Role="Users">
+						<PropertyRef Name="ID"/>
+					</Principal>
+					<Dependent Role="Pakets">
+						<PropertyRef Name="user_ID"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Annotations Target="CatalogService.EntityContainer/Users" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+				<Annotation Term="Capabilities.DeleteRestrictions">
+					<Record Type="Capabilities.DeleteRestrictionsType">
+						<PropertyValue Property="Deletable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.InsertRestrictions">
+					<Record Type="Capabilities.InsertRestrictionsType">
+						<PropertyValue Property="Insertable" Bool="false"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="Capabilities.UpdateRestrictions">
+					<Record Type="Capabilities.UpdateRestrictionsType">
+						<PropertyValue Property="Updatable" Bool="false"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

@@ -3,7 +3,7 @@
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
-					<Panel expandable="true" expanded="false" headerText="neuer Benutzer" width="auto" class="sapUiResponsiveMargin">
+					<Panel expandable="true" expanded="false" headerText="neuer Kunde hinzufügen" width="auto" class="sapUiResponsiveMargin">
 						<content>
 							<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="__form1">
 								<sap.ui.layout.form:formContainers>
@@ -29,19 +29,16 @@
 													<Input width="50%" id="inputAdresse"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Email" id="elementEmail">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputEmail"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Tele.Nummer" id="elementTele">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputTele"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 										</sap.ui.layout.form:formElements>
 									</sap.ui.layout.form:FormContainer>
 								</sap.ui.layout.form:formContainers>
@@ -51,11 +48,44 @@
 							</sap.ui.layout.form:Form>
 						</content>
 						<Toolbar height="3rem">
-						<Button icon="sap-icon://add" text="Pack Item" type="Emphasized" press="onAdd"/>
+							<Button icon="sap-icon://add" text="hinzufügen" type="Emphasized" press="onAdd"/>
 						</Toolbar>
 					</Panel>
-					<Panel expandable="true" expanded="false" headerText="Header Info" width="auto" class="sapUiResponsiveMargin">
-					
+					<Panel expandable="true" expanded="false" headerText="Kunden" width="auto" class="sapUiResponsiveMargin">
+						<content>
+							<Table items="{/Users}">
+								<columns>
+									<Column width="12em">
+										<Text text="Name"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Vorname"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="PLZ"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Adresse"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Telefonnummer "/>
+									</Column>
+								</columns>
+								
+								<items>
+									<ColumnListItem>
+										<cells>
+											<ObjectIdentifier title="{name}" text="{ProductId}" class="sapMTableContentMargin"/>
+											<Text text="{vorname}"/>
+											<Text text="{postzahl}"/>
+											<Text text="{adresse}"/>
+											<Text text="{teleNummer}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+								
+							</Table>
+						</content>
 					</Panel>
 				</Page>
 			</pages>

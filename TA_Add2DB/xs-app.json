@@ -6,6 +6,13 @@
   },
   "routes": [
     {
+      "source": "^/mainService/(.*)$",
+      "target": "$1",
+      "authenticationType": "none",
+      "destination": "mainService",
+      "csrfProtection": false
+    },
+    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",

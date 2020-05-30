@@ -13,6 +13,7 @@ modules:
     requires:
       - name: mta_TA_Add2DB_html5_repo_runtime
       - name: uaa_mta_TA_Add2DB
+      - name: dest_mta_TA_Add2DB
   - name: mta_TA_Add2DB_ui_deployer
     type: com.sap.html5.application-content
     path: mta_TA_Add2DB_ui_deployer
