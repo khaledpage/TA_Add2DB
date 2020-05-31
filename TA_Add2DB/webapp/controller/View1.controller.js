@@ -1,6 +1,6 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+	"sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap/ui/model/odata/v2/ODataModel"
+], function (Controller, JSONModel, ODataModel) {
 	"use strict";
 
 	return Controller.extend("TA_logistik.TA_Add2DB.controller.View1", {
@@ -42,7 +42,7 @@ sap.ui.define([
 			var itemData = oModel.getProperty("/Users");
 			console.log(itemData);
 			var itemRow = {
-				ID: ID,
+				ID: parseInt(ID,10),
 				name: Name,
 				vorname: Vorname,
 				postzahl: Postzhal,
@@ -56,8 +56,19 @@ sap.ui.define([
 			oModel.setData({
 				Users: itemData
 			});
- 
-		
+			var oModelG = this.getView().getModel();
+			var oMetadata = oModelG.getServiceMetadata();
+
+			console.log(oMetadata);
+			// oModel.create("/Users", itemRow);
+			jQuery.sap.require("sap.ui.commons.MessageBox");
+			oModelG.create('/Users', itemRow, null, function () {
+				sap.ui.commons.MessageBox.show(
+					// sap.ui.commons.MessageBox.alert("Success!");
+				);
+			}, function () {
+				sap.ui.commons.MessageBox.alert("Error!");
+			});
 
 		}
 

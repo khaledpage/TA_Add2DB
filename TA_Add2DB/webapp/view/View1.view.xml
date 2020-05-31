@@ -58,10 +58,46 @@
 						<Toolbar height="3rem">
 							<Button icon="sap-icon://add" text="hinzufügen" type="Emphasized" press="onAdd"/>
 						</Toolbar>
+						<Table id="packItem"  items="{/Users}">
+								<columns>
+									<Column width="12em">
+										<Text text="ID"/>
+									</Column>
+									<Column width="12em">
+										<Text text="Name"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Vorname"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="PLZ"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Adresse"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Telefonnummer "/>
+									</Column>
+								</columns>
+								
+								<items>
+									<ColumnListItem>
+										<cells>
+											<ObjectIdentifier  text="{ID}" class="sapMTableContentMargin"/>
+												<Text text="{name}"/>
+											<Text text="{vorname}"/>
+											<Text text="{postzahl}"/>
+											<Text text="{adresse}"/>
+											<Text text="{teleNummer}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+								
+							</Table>
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Kunden" width="auto" class="sapUiResponsiveMargin">
 						<content>
-							<Table id="packItem"  items="{/Users}">
+							<Table id="kundeTabelle"  items="{/Users}">
 								<columns>
 									<Column width="12em">
 										<Text text="ID"/>
