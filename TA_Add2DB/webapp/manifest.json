@@ -78,11 +78,9 @@
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -94,22 +92,30 @@
 				"controlId": "app",
 				"clearControlAggregation": false
 			},
-			"routes": [
-				{
-					"name": "TargetView1",
-					"pattern": "RouteView1",
-					"target": [
-						"TargetView1"
-					]
-				}
-			],
+			"routes": [{
+				"name": "TargetView1",
+				"pattern": "",
+				"target": ["TargetView1"]
+			}, {
+				"name": "Detail",
+				"pattern": "detail/{productId}",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["Detail"]
+			}],
 			"targets": {
 				"TargetView1": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
-					"viewId": "View1",
+					"viewId": "app",
 					"viewName": "View1"
+				},
+				"Detail": {
+					"viewType": "XML",
+					"viewName": "Detail",
+					"viewLevel": 2,
+					"viewId": "Detail"
 				}
 			}
 		}

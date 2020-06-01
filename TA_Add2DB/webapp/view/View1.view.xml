@@ -9,19 +9,16 @@
 								<sap.ui.layout.form:formContainers>
 									<sap.ui.layout.form:FormContainer id="__container1">
 										<sap.ui.layout.form:formElements>
-											
-												<sap.ui.layout.form:FormElement label="ID" id="elementID">
+											<sap.ui.layout.form:FormElement label="ID" id="elementID">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputID"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Name" id="elementName">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputName"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Vorname" id="elementVorname">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputVorname"/>
@@ -58,46 +55,44 @@
 						<Toolbar height="3rem">
 							<Button icon="sap-icon://add" text="hinzufügen" type="Emphasized" press="onAdd"/>
 						</Toolbar>
-						<Table id="packItem"  items="{/Users}">
-								<columns>
-									<Column width="12em">
-										<Text text="ID"/>
-									</Column>
-									<Column width="12em">
-										<Text text="Name"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="Vorname"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="PLZ"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="Adresse"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="Telefonnummer "/>
-									</Column>
-								</columns>
-								
-								<items>
-									<ColumnListItem>
-										<cells>
-											<ObjectIdentifier  text="{ID}" class="sapMTableContentMargin"/>
-												<Text text="{name}"/>
-											<Text text="{vorname}"/>
-											<Text text="{postzahl}"/>
-											<Text text="{adresse}"/>
-											<Text text="{teleNummer}"/>
-										</cells>
-									</ColumnListItem>
-								</items>
-								
-							</Table>
+						<Table id="packItem" items="{/Users}">
+							<columns>
+								<Column width="12em">
+									<Text text="ID"/>
+								</Column>
+								<Column width="12em">
+									<Text text="Name"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Vorname"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="PLZ"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Adresse"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Telefonnummer "/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<ObjectIdentifier text="{ID}" class="sapMTableContentMargin"/>
+										<Text text="{name}"/>
+										<Text text="{vorname}"/>
+										<Text text="{postzahl}"/>
+										<Text text="{adresse}"/>
+										<Text text="{teleNummer}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Kunden" width="auto" class="sapUiResponsiveMargin">
 						<content>
-							<Table id="kundeTabelle"  items="{/Users}">
+							<Table id="kundeTabelle" items="{/Users}">
 								<columns>
 									<Column width="12em">
 										<Text text="ID"/>
@@ -117,22 +112,64 @@
 									<Column minScreenWidth="Tablet" demandPopin="true">
 										<Text text="Telefonnummer "/>
 									</Column>
-								</columns>
 								
+								</columns>
 								<items>
 									<ColumnListItem>
 										<cells>
-											<ObjectIdentifier  text="{ID}" class="sapMTableContentMargin"/>
-												<Text text="{name}"/>
+											<ObjectIdentifier text="{ID}" modelContextChange="setFilter" class="sapMTableContentMargin"/>
+											<Text text="{name}"/>
 											<Text text="{vorname}"/>
 											<Text text="{postzahl}"/>
 											<Text text="{adresse}"/>
 											<Text text="{teleNummer}"/>
+											
 										</cells>
 									</ColumnListItem>
 								</items>
-								
 							</Table>
+						</content>
+					</Panel>
+					<Panel expandable="true" expanded="false" headerText="Pakete" width="auto" class="sapUiResponsiveMargin">
+						<content>
+							<Table id="Pakete" items="{/Packets}">
+								<columns>
+									<Column width="12em">
+										<Text text="ID"/>
+									</Column>
+									<Column width="12em">
+										<Text text="Zustand"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Lager"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Notizen"/>
+									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true">
+										<Text text="Kundennummer"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<ObjectIdentifier text="{ID}" class="sapMTableContentMargin"/>
+											<Text text="{status}"/>
+											<Text text="{stock}"/>
+											<Text text="{note}"/>
+											<Text text="{user_ID}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</content>
+					</Panel>
+					
+					<Panel expandable="true" expanded="false" headerText="Kunden/Pakete List" width="auto" class="sapUiResponsiveMargin">
+						<content>
+						<List items="{/Users}">
+							<StandardListItem type="Navigation" press="handleListItemPress" title="{name},{vorname}"/>
+						</List>
 						</content>
 					</Panel>
 				</Page>
