@@ -1,4 +1,4 @@
-var global = "";
+// var global = "";
 sap.ui.define([
 	"sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", "sap/ui/model/odata/v2/ODataModel", "sap/m/MessageBox",
 	"sap/m/MessageToast"
@@ -7,30 +7,33 @@ sap.ui.define([
 
 	return Controller.extend("TA_logistik.TA_Add2DB.controller.View1", {
 		onInit: function () {
-			// var oModel = new JSONModel();
-			// this.getView().byId("packItem").setModel(oModel);
+	
 
-			/*	var testData = [];
-				var oModel = new sap.ui.model.json.JSONModel({
-					data: testData
-				});
-				this.getView().setModel(oModel);*/
-
-			// 				var sUrl = "/mainService/odata/v2/CatalogService/";
-			// var oModel = new sap.ui.model.odata.ODataModel(sUrl, true);
-			// 		console.log(oModel)	;
+			var input = this.getView().byId("inputID");
+			input.addEventDelegate({
+				onfocusin: function () {
+					//alert("focus");
+					input.setValue(parseInt(Date.now() / 100000, 10).toString());
+				}
+			});
 
 			var testData = [];
 			var oModel = new sap.ui.model.json.JSONModel({
 				Users: testData
 			});
-			// this.getView().setModel(oModel);
+			var oModel2 = new sap.ui.model.json.JSONModel({
+				Packets: testData
+			});
+	
 			this.getView().byId("packItem").setModel(oModel);
+			this.getView().byId("AddPaket").setModel(oModel2);
 
 		},
 		onAdd: function () {
 			// Get the values of the header input fields
+
 			var ID = this.getView().byId("inputID").getValue();
+
 			var Name = this.getView().byId("inputName").getValue();
 			var Vorname = this.getView().byId("inputVorname").getValue();
 			var Postzhal = this.getView().byId("inputPLZ").getValue();
@@ -38,13 +41,9 @@ sap.ui.define([
 			var Email = this.getView().byId("inputEmail").getValue();
 			var TeleNummer = this.getView().byId("inputTele").getValue();
 
-			var oModel = this.getView().byId("packItem").getModel();
-			// var oModel = sap.ui.getCore().getModel();
-			// console.log(oModel);
-			var itemData = oModel.getProperty("/Users");
 			// console.log(itemData);
 			var itemRow = {
-				ID: parseInt(ID, 10),
+				ID: (parseInt(ID, 10)),
 				name: Name,
 				vorname: Vorname,
 				postzahl: Postzhal,
@@ -52,52 +51,112 @@ sap.ui.define([
 				email: Email,
 				teleNummer: TeleNummer
 			};
-			// console.log(itemRow);
+			var oModel = this.getView().byId("packItem").getModel();
+			// var oModel = sap.ui.getCore().getModel();
+			// console.log(oModel);
+			var itemData = oModel.getProperty("/Users");
+			// tabelle aktualisieren
 			itemData.push(itemRow);
-
 			oModel.setData({
 				Users: itemData
 			});
+
+			// Hochladen
 			var oModelG = this.getView().getModel();
-			// var oMetadata = oModelG.getServiceMetadata();
-			// console.log(oMetadata);
 
-			jQuery.sap.require("sap.ui.commons.MessageBox");
-			oModelG.create('/Users', itemRow, null, function () {
-				sap.ui.commons.MessageBox.show(
-					// sap.ui.commons.MessageBox.alert("Success!");
-					"Success!"
-				);
+			oModelG.create("/Users", itemRow, {
+				success: function (oData, oResponse) {
+					// Success
+					sap.m.MessageToast.show(" Created Successfully");
 
-			}, function (e) {
-				sap.ui.commons.MessageBox.alert("Error!:" + e);
+					this.getView().byId("inputID").setValue("");
+					this.getView().byId("inputName").setValue("");
+					this.getView().byId("inputVorname").setValue("");
+					this.getView().byId("inputPLZ").setValue("");
+					this.getView().byId("inputAdresse").setValue("");
+					this.getView().byId("inputEmail").setValue("");
+					this.getView().byId("inputTele").setValue("");
+				},
+				error: function (oError) {
+					// Error
+					sap.m.MessageToast.show("Fehler -> Console");
+					console.log(oError);
 
+				}
 			});
 
 		},
-		setFilter: function (oContext) {
-			global = oContext.getSource().getText();
-			console.log(global);
 
-			// var oModelG = this.getView().getModel();
+		handleListItemPress: function (oEvent) {
 
-			// var tf =	oModelG.read("/Packets", null, ["$filter=ID eq '2412341' "], false,
-			// 		function (oData, response) {
-			// 			//Sucess
-			// 		},
-			// 		function (oError) {}
-			// 	);
-			// 	console.log(tf);
-		},
-			handleListItemPress: function (oEvent) {
-			
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			var selectedProductId = oEvent.getSource().getBindingContext().getProperty("ID");
-			console.log("clicked ID:"+selectedProductId);
+
 			oRouter.navTo("Detail", {
 				productId: selectedProductId
 			});
+		},
+		
+		
+		
+		onAddPacket: function () {
+	
+			var ID = this.getView().byId("PaketinputID").getValue();
+			var status = this.getView().byId("inputStatus").getValue();
+			var stock = this.getView().byId("inputNotizen").getValue();
+			var note = this.getView().byId("inputLager").getValue();
+			var user_ID = this.getView().byId("inputKundenId").getValue();
+
+			var itemRow = {
+				ID: parseInt(ID, 10),
+				status: status,
+				stock: stock,
+				note: note,
+				user_ID: parseInt(user_ID, 10)
+
+			};
+		
+			
+			var oModel = this.getView().byId("AddPaket").getModel();
+			// var oModel = sap.ui.getCore().getModel();
+			 console.log(oModel);
+			var itemData = oModel.getProperty("/Packets");
+			 console.log(itemData);
+			// tabelle aktualisieren
+			itemData.push(itemRow);
+			oModel.setData({
+				Packets: itemData
+			});
+			
+			
+			// Hochladen
+			var oModelG = this.getView().getModel();
+
+			oModelG.create("/Packets", itemRow, {
+				success: function (oData, oResponse) {
+					// Success
+					sap.m.MessageToast.show(" Created Successfully");
+					
+					this.getView().byId("PaketinputID").setValue("");
+					this.getView().byId("inputStatus").setValue("");
+					this.getView().byId("inputNotizen").setValue("");
+					this.getView().byId("inputLager").setValue("");
+					this.getView().byId("inputKundenId").setValue("");
+
+				},
+				error: function (oError) {
+					// Error
+					sap.m.MessageToast.show("Fehler -> Console");
+					console.log(oError);
+
+				}
+			});
+
 		}
+
+		// setFilter: function (oContext) {
+		// 	global = oContext.getSource().getText();
+		// },
 		// handelTableDetail: function (oContext) {
 		// 	var oModelG = this.getView().getModel();
 		// 	// var tf = oModelG.read("/Packets");
@@ -127,9 +186,9 @@ sap.ui.define([
 		// 		binding.filter(filters);
 
 		// 	}
-			// handleDetail: function (oContext) {
-			// 	// create model filter
-			// 	var filters = [];
+		// handleDetail: function (oContext) {
+		// 	// create model filter
+		// 	var filters = [];
 
 		// 		var filter = new sap.ui.model.Filter("Packets", sap.ui.model.FilterOperator.Contains, global);
 		// 		filters.push(filter);
