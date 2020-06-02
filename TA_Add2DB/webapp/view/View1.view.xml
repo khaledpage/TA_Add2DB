@@ -3,7 +3,6 @@
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
-				
 					<Panel expandable="true" expanded="false" headerText="neuer Kunde hinzufügen" width="auto" class="sapUiResponsiveMargin">
 						<content>
 							<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="__form1">
@@ -12,7 +11,7 @@
 										<sap.ui.layout.form:formElements>
 											<sap.ui.layout.form:FormElement label="ID" id="elementID">
 												<sap.ui.layout.form:fields>
-													<Input  width="50%" id="inputID"/>
+													<Input width="50%" id="inputID"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
 											<sap.ui.layout.form:FormElement label="Name" id="elementName">
@@ -91,9 +90,6 @@
 							</items>
 						</Table>
 					</Panel>
-				
-				
-				
 					<Panel expandable="true" expanded="false" headerText="neues Paket hinzufügen" width="auto" class="sapUiResponsiveMargin" id="elementKunde">
 						<content >
 							<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="Paketform1">
@@ -105,36 +101,27 @@
 													<Input width="50%" id="PaketinputID"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Zustand" id="elementStatus">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputStatus"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Lager" id="elementLager">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputLager"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
 											<sap.ui.layout.form:FormElement label="Notizen" id="elementNotizen">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputNotizen"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
-											<sap.ui.layout.form:FormElement label="Kunden ID" >
-												<sap.ui.layout.form:fields  >
-												<Input width="50%" id="inputKundenId"/>
-										
+											<sap.ui.layout.form:FormElement label="Kunden ID">
+												<sap.ui.layout.form:fields >
+													<Input width="50%" id="inputKundenId"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
-											
-										
-											
 										</sap.ui.layout.form:formElements>
-										
 									</sap.ui.layout.form:FormContainer>
 								</sap.ui.layout.form:formContainers>
 								<sap.ui.layout.form:layout>
@@ -143,44 +130,46 @@
 							</sap.ui.layout.form:Form>
 						</content>
 						<Toolbar height="3rem">
-						
 							<Button icon="sap-icon://add" text="hinzufügen" type="Emphasized" press="onAddPacket"/>
 						</Toolbar>
-						<Table id="AddPaket" items="{/Packets}" >
-						<columns>
-									<Column width="12em">
-										<Text text="ID"/>
-									</Column>
-									<Column width="12em">
-										<Text text="Zustand"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="Lager"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="Notizen"/>
-									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										<Text text="Kundennummer"/>
-									</Column>
-								</columns>
-								<items>
-									<ColumnListItem>
-										<cells>
-											<ObjectIdentifier text="{ID}" class="sapMTableContentMargin"/>
-											<Text text="{status}"/>
-											<Text text="{stock}"/>
-											<Text text="{note}"/>
-											<Text text="{user_ID}"/>
-										</cells>
-									</ColumnListItem>
-								</items>
+						<Table id="AddPaket" items="{/Packets}">
+							<columns>
+								<Column width="12em">
+									<Text text="Paketnummer"/>
+								</Column>
+								<Column width="12em">
+									<Text text="Zustand"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Lager"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Notizen"/>
+								</Column>
+								<Column minScreenWidth="Tablet" demandPopin="true">
+									<Text text="Kundennummer"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<ObjectIdentifier text="{Barcode}" class="sapMTableContentMargin"/>
+										<Text text="{status}"/>
+										<Text text="{stock}"/>
+										<Text text="{note}"/>
+										<Text text="{user_ID}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
 						</Table>
 					</Panel>
-				
-				
 					<Panel expandable="true" expanded="false" headerText="Kunden" width="auto" class="sapUiResponsiveMargin">
 						<content>
+							<Bar>
+								<contentLeft>
+									<SearchField search="handleSearchKunde" id="searchboxKunde"/>
+								</contentLeft>
+							</Bar>
 							<Table id="kundeTabelle" items="{/Users}">
 								<columns>
 									<Column width="12em">
@@ -201,7 +190,6 @@
 									<Column minScreenWidth="Tablet" demandPopin="true">
 										<Text text="Telefonnummer "/>
 									</Column>
-								
 								</columns>
 								<items>
 									<ColumnListItem>
@@ -212,21 +200,23 @@
 											<Text text="{postzahl}"/>
 											<Text text="{adresse}"/>
 											<Text text="{teleNummer}"/>
-											
 										</cells>
 									</ColumnListItem>
 								</items>
 							</Table>
 						</content>
 					</Panel>
-					
-					
 					<Panel expandable="true" expanded="false" headerText="Pakete" width="auto" class="sapUiResponsiveMargin">
 						<content>
+								<Bar>
+								<contentLeft>
+									<SearchField search="handleSearchPacktes" id="searchboxPacktes"/>
+								</contentLeft>
+							</Bar>
 							<Table id="Pakete" items="{/Packets}">
 								<columns>
 									<Column width="12em">
-										<Text text="ID"/>
+										<Text text="Paketnummer"/>
 									</Column>
 									<Column width="12em">
 										<Text text="Zustand"/>
@@ -255,12 +245,16 @@
 							</Table>
 						</content>
 					</Panel>
-					
 					<Panel expandable="true" expanded="false" headerText="Kunden/Pakete List" width="auto" class="sapUiResponsiveMargin">
+						<Bar>
+							<contentLeft>
+								<SearchField search="handleSearch" id="searchbox"/>
+							</contentLeft>
+						</Bar>
 						<content>
-						<List items="{/Users}">
-							<StandardListItem type="Navigation" press="handleListItemPress" title="{name},{vorname}"/>
-						</List>
+							<List items="{/Users}" id="List">
+								<StandardListItem type="Navigation" press="handleListItemPress" title="{name},{vorname}"/>
+							</List>
 						</content>
 					</Panel>
 				</Page>

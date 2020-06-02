@@ -7,7 +7,6 @@ sap.ui.define([
 
 	return Controller.extend("TA_logistik.TA_Add2DB.controller.View1", {
 		onInit: function () {
-	
 
 			var input = this.getView().byId("inputID");
 			input.addEventDelegate({
@@ -24,7 +23,7 @@ sap.ui.define([
 			var oModel2 = new sap.ui.model.json.JSONModel({
 				Packets: testData
 			});
-	
+
 			this.getView().byId("packItem").setModel(oModel);
 			this.getView().byId("AddPaket").setModel(oModel2);
 
@@ -96,11 +95,9 @@ sap.ui.define([
 				productId: selectedProductId
 			});
 		},
-		
-		
-		
+
 		onAddPacket: function () {
-	
+
 			var ID = this.getView().byId("PaketinputID").getValue();
 			var status = this.getView().byId("inputStatus").getValue();
 			var stock = this.getView().byId("inputNotizen").getValue();
@@ -115,20 +112,26 @@ sap.ui.define([
 				user_ID: parseInt(user_ID, 10)
 
 			};
-		
-			
+			var itemRowItems = {
+				Barcode: parseInt(ID, 10),
+				status: status,
+				stock: stock,
+				note: note,
+				user_ID: parseInt(user_ID, 10)
+
+			};
+
 			var oModel = this.getView().byId("AddPaket").getModel();
 			// var oModel = sap.ui.getCore().getModel();
-			 console.log(oModel);
+			console.log(oModel);
 			var itemData = oModel.getProperty("/Packets");
-			 console.log(itemData);
+			console.log(itemData);
 			// tabelle aktualisieren
-			itemData.push(itemRow);
+			itemData.push(itemRowItems);
 			oModel.setData({
 				Packets: itemData
 			});
-			
-			
+
 			// Hochladen
 			var oModelG = this.getView().getModel();
 
@@ -136,7 +139,7 @@ sap.ui.define([
 				success: function (oData, oResponse) {
 					// Success
 					sap.m.MessageToast.show(" Created Successfully");
-					
+
 					this.getView().byId("PaketinputID").setValue("");
 					this.getView().byId("inputStatus").setValue("");
 					this.getView().byId("inputNotizen").setValue("");
@@ -152,8 +155,54 @@ sap.ui.define([
 				}
 			});
 
-		}
+		},
+		handleSearch: function (evt) {
+			MessageToast.show("searching.......");
+			// create model filter
+			var filters = [];
+			var query = this.getView().byId("searchbox").getValue();
+			if (query && query.length > 0) {
+				var filter = new sap.ui.model.Filter("name", sap.ui.model.FilterOperator.Contains, query);
+				filters.push(filter);
+			}
 
+			// update list binding
+			var list = this.getView().byId("List");
+			var binding = list.getBinding("items");
+			binding.filter(filters);
+		},
+			handleSearchKunde: function (evt) {
+			MessageToast.show("searching.......");
+			// create model filter
+			var filters = [];
+			var query = this.getView().byId("searchboxKunde").getValue();
+			if (query && query.length > 0) {
+				var filter = new sap.ui.model.Filter("name", sap.ui.model.FilterOperator.Contains, query);
+				filters.push(filter);
+			}
+
+			// update list binding
+			var list = this.getView().byId("kundeTabelle");
+			var binding = list.getBinding("items");
+			binding.filter(filters);
+		}
+,
+			handleSearchPacktes: function (evt) {
+		
+			// create model filter
+			var filters = [];
+			var query = this.getView().byId("searchboxPacktes").getValue();
+				MessageToast.show("searching for : " + query);
+			if (query && query.length > 0) {
+				var filter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ,query);
+				filters.push(filter);
+			}
+
+			// update list binding
+			var list = this.getView().byId("Pakete");
+			var binding = list.getBinding("items");
+			binding.filter(filters);
+		}
 		// setFilter: function (oContext) {
 		// 	global = oContext.getSource().getText();
 		// },
