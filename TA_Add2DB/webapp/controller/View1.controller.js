@@ -32,25 +32,25 @@ sap.ui.define([
 		onAdd: function () {
 			// Get the values of the header input fields
 
-			var ID = this.getView().byId("inputID").getValue();
+			var ID = this.getView().byId("inputID");
 
-			var Name = this.getView().byId("inputName").getValue();
-			var Vorname = this.getView().byId("inputVorname").getValue();
-			var Postzhal = this.getView().byId("inputPLZ").getValue();
-			var Adresse = this.getView().byId("inputAdresse").getValue();
-			var Email = this.getView().byId("inputEmail").getValue();
-			var TeleNummer = this.getView().byId("inputTele").getValue();
+			var Name = this.getView().byId("inputName");
+			var Vorname = this.getView().byId("inputVorname");
+			var Postzhal = this.getView().byId("inputPLZ");
+			var Adresse = this.getView().byId("inputAdresse");
+			var Email = this.getView().byId("inputEmail");
+			var TeleNummer = this.getView().byId("inputTele");
 
 			var oModel = this.getView().byId("packItem").getModel();
 			// console.log(itemData);
 			var itemRow = {
-				ID: (parseInt(ID, 10)),
-				name: Name,
-				vorname: Vorname,
-				postzahl: Postzhal,
-				adresse: Adresse,
-				email: Email,
-				teleNummer: TeleNummer
+				ID: (parseInt(ID.getValue(), 10)),
+				name: Name.getValue(),
+				vorname: Vorname.getValue(),
+				postzahl: Postzhal.getValue(),
+				adresse: Adresse.getValue(),
+				email: Email.getValue(),
+				teleNummer: TeleNummer.getValue()
 			};
 
 			// Hochladen
@@ -78,13 +78,13 @@ sap.ui.define([
 
 					});
 
-					this.getView().byId("inputID").setValue("");
-					this.getView().byId("inputName").setValue("");
-					this.getView().byId("inputVorname").setValue("");
-					this.getView().byId("inputPLZ").setValue("");
-					this.getView().byId("inputAdresse").setValue("");
-					this.getView().byId("inputEmail").setValue("");
-					this.getView().byId("inputTele").setValue("");
+					ID.setValue("");
+					Name.setValue("");
+					Vorname.setValue("");
+					Postzhal.setValue("");
+					Adresse.setValue("");
+					Email.setValue("");
+					TeleNummer.setValue("");
 				},
 				error: function (oError) {
 					// Error
@@ -108,18 +108,18 @@ sap.ui.define([
 
 		onAddPacket: function () {
 
-			var ID = this.getView().byId("PaketinputID").getValue();
-			var status = this.getView().byId("inputStatus").getValue();
-			var stock = this.getView().byId("inputNotizen").getValue();
-			var note = this.getView().byId("inputLager").getValue();
-			var user_ID = this.getView().byId("inputKundenId").getValue();
+			var ID = this.getView().byId("PaketinputID");
+			var status = this.getView().byId("inputStatus");
+			var stock = this.getView().byId("inputNotizen");
+			var note = this.getView().byId("inputLager");
+			var combobox = this.getView().byId("comboBoxKunde");
 
 			var itemRow = {
-				ID: parseInt(ID, 10),
-				status: status,
-				stock: stock,
-				note: note,
-				user_ID: parseInt(user_ID, 10)
+				ID: parseInt(ID.getValue(), 10),
+				status: status.getValue(),
+				stock: stock.getValue(),
+				note: note.getValue(),
+				user_ID: parseInt(combobox.getSelectedKey(), 10)
 
 			};
 
@@ -155,12 +155,11 @@ sap.ui.define([
 
 					});
 
-					// this.getView().byId("PaketinputID").setValue("");
-					// this.getView().byId("inputStatus").setValue("");
-					// this.getView().byId("inputNotizen").setValue("");
-					// this.getView().byId("inputLager").setValue("");
-					// this.getView().byId("inputKundenId").setValue("");
-
+					ID.setValue("");
+					status.setValue("");
+					stock.setValue("");
+					note.setValue("");
+					combobox.setValue("");
 				},
 				error: function (oError) {
 					// Error
@@ -171,6 +170,7 @@ sap.ui.define([
 			});
 
 		},
+
 		handleSearch: function (evt) {
 			MessageToast.show("searching.......");
 			// create model filter

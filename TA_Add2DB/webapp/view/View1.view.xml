@@ -1,10 +1,10 @@
-<mvc:View controllerName="TA_logistik.TA_Add2DB.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View controllerName="TA_logistik.TA_Add2DB.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:core="sap.ui.core">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
 					<Panel expandable="true" expanded="false" headerText="neuen Kunden hinzufügen" width="auto" class="sapUiResponsiveMargin">
-
 						<content>
 							<sap.ui.layout.form:Form xmlns:sap.ui.layout.form="sap.ui.layout.form" editable="true" id="__form1">
 								<sap.ui.layout.form:formContainers>
@@ -81,7 +81,6 @@
 								<ColumnListItem>
 									<cells>
 										<ObjectIdentifier text="{ID}" class="sapMTableContentMargin"/>
-									
 										<Text text="{name}"/>
 										<Text text="{vorname}"/>
 										<Text text="{postzahl}"/>
@@ -120,7 +119,12 @@
 											</sap.ui.layout.form:FormElement>
 											<sap.ui.layout.form:FormElement label="Kunden ID">
 												<sap.ui.layout.form:fields >
-													<Input width="50%" id="inputKundenId"/>
+												
+												
+												
+													<ComboBox  width="50%" id="comboBoxKunde" items="{path: '/Users'}">
+														<core:Item key="{ID}" text="{name},{vorname} @ {adresse}"/>
+													</ComboBox>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
 										</sap.ui.layout.form:formElements>
@@ -167,12 +171,12 @@
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Kunden" width="auto" class="sapUiResponsiveMargin">
 						<headerToolbar>
-<Toolbar height="3rem">
-<Title text="Kunden"/>
-<ToolbarSpacer/>
-<Button icon="sap-icon://sys-minus" text="Delete Row" type="Reject" press="ondeleteKunde"/>
-</Toolbar>
-</headerToolbar>
+							<Toolbar height="3rem">
+								<Title text="Kunden"/>
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://sys-minus" text="Delete Row" type="Reject" press="ondeleteKunde"/>
+							</Toolbar>
+						</headerToolbar>
 						<content>
 							<Bar>
 								<contentLeft>
@@ -199,11 +203,7 @@
 									<Column minScreenWidth="Tablet" demandPopin="true">
 										<Text text="Telefonnummer "/>
 									</Column>
-									<Column minScreenWidth="Tablet" demandPopin="true">
-										  
-
-      
-									</Column>
+									<Column minScreenWidth="Tablet" demandPopin="true"></Column>
 								</columns>
 								<items>
 									<ColumnListItem>
@@ -214,7 +214,6 @@
 											<Text text="{postzahl}"/>
 											<Text text="{adresse}"/>
 											<Text text="{teleNummer}"/>
-										
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -222,20 +221,20 @@
 						</content>
 					</Panel>
 					<Panel expandable="true" expanded="false" headerText="Pakete" width="auto" class="sapUiResponsiveMargin">
-												<headerToolbar>
-<Toolbar height="3rem">
-<Title text="Pakete"/>
-<ToolbarSpacer/>
-<Button icon="sap-icon://sys-minus" text="Delete Row" type="Reject" press="ondeletePakets"/>
-</Toolbar>
-</headerToolbar>
+						<headerToolbar>
+							<Toolbar height="3rem">
+								<Title text="Pakete"/>
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://sys-minus" text="Delete Row" type="Reject" press="ondeletePakets"/>
+							</Toolbar>
+						</headerToolbar>
 						<content>
-								<Bar>
+							<Bar>
 								<contentLeft>
 									<SearchField search="handleSearchPacktes" id="searchboxPacktes"/>
 								</contentLeft>
 							</Bar>
-							<Table id="Pakete" items="{/Packets}" mode="MultiSelect" growing="true" growingThreshold="4" growingScrollToLoad="false" >
+							<Table id="Pakete" items="{/Packets}" mode="MultiSelect" growing="true" growingThreshold="4" growingScrollToLoad="false">
 								<columns>
 									<Column width="12em">
 										<Text text="Paketnummer"/>
