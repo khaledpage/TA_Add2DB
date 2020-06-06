@@ -7,7 +7,7 @@ sap.ui.define([
 
 	return Controller.extend("TA_logistik.TA_Add2DB.controller.View1", {
 		onInit: function () {
-
+			//EventListner für ID-Eingabefeld Hinzufügen
 			var input = this.getView().byId("inputID");
 			input.addEventDelegate({
 				onfocusin: function () {
@@ -16,17 +16,40 @@ sap.ui.define([
 				}
 			});
 
-			var testData = [];
-			var testData2 = [];
+			//OModelle erstellen 
+			var LeereArray = [];
+			var PaketZustandArr = [{
+					status: "unterwegs zur zustellung"
+				}, {
+					status: "geliefert"
+				}, {
+					status: "Angekommen"
+				}, {
+					status: "Bearbeitung"
+				}, {
+					status: "Verloren"
+				}, {
+					status: "Beschädigt"
+				}, {
+					status: "?"
+				}
+
+			];
+
 			var oModel = new sap.ui.model.json.JSONModel({
-				Users: testData
+				Users: LeereArray
 			});
 			var oModel2 = new sap.ui.model.json.JSONModel({
-				Packets: testData2
+				Packets: LeereArray
+			});
+
+			var oModel3 = new sap.ui.model.json.JSONModel({
+				Status: PaketZustandArr
 			});
 
 			this.getView().byId("packItem").setModel(oModel);
 			this.getView().byId("AddPaket").setModel(oModel2);
+			this.getView().byId("comboBoxinputStatus").setModel(oModel3);
 
 		},
 		onAdd: function () {
@@ -52,19 +75,14 @@ sap.ui.define([
 				email: Email.getValue(),
 				teleNummer: TeleNummer.getValue()
 			};
-
 			// Hochladen
 			var oModelG = this.getView().getModel();
-
 			oModelG.create("/Users", itemRow, {
 				success: function (oData, oResponse) {
 					// Success
 					sap.m.MessageToast.show(" Created Successfully");
-
 					oModelG.read("/Users(" + itemRow.ID + ")", {
 						success: function (oData2, oResponse2) {
-							console.log(oData2)
-
 							var itemData = oModel.getProperty("/Users");
 							// tabelle aktualisieren
 							itemData.push(oData2);
@@ -77,7 +95,6 @@ sap.ui.define([
 						}
 
 					});
-
 					ID.setValue("");
 					Name.setValue("");
 					Vorname.setValue("");
@@ -88,19 +105,19 @@ sap.ui.define([
 				},
 				error: function (oError) {
 					// Error
-					sap.m.MessageToast.show("Fehler -> Console");
-					console.log(oError);
-
+					sap.m.MessageToast.show("Fehler:"+oError);
+					
 				}
 			});
 
 		},
 
 		handleListItemPress: function (oEvent) {
-
+			//oRouter Abrufen
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			// die ID des Kunde abrufen
 			var selectedProductId = oEvent.getSource().getBindingContext().getProperty("ID");
-
+			//Navigieren und Parameter ermitteln
 			oRouter.navTo("Detail", {
 				productId: selectedProductId
 			});
@@ -109,14 +126,13 @@ sap.ui.define([
 		onAddPacket: function () {
 
 			var ID = this.getView().byId("PaketinputID");
-			var status = this.getView().byId("inputStatus");
+			var status = this.getView().byId("comboBoxinputStatus");
 			var stock = this.getView().byId("inputNotizen");
 			var note = this.getView().byId("inputLager");
 			var combobox = this.getView().byId("comboBoxKunde");
-
-			var itemRow = {
+					var itemRow = {
 				ID: parseInt(ID.getValue(), 10),
-				status: status.getValue(),
+				status: status.getSelectedKey(),
 				stock: stock.getValue(),
 				note: note.getValue(),
 				user_ID: parseInt(combobox.getSelectedKey(), 10)
@@ -136,16 +152,10 @@ sap.ui.define([
 
 					oModelG.read("/Packets(" + itemRow.ID + ")", {
 						success: function (oData2, oResponse2) {
-							console.log(oData2)
-
-							var itemData = oModel.getProperty("/Packets");
-
-							console.log(itemData);
-
+						var itemData = oModel.getProperty("/Packets");
 							// tabelle aktualisieren
 							itemData.push(oData2);
-							console.log(itemData);
-							oModel.setData({
+								oModel.setData({
 								Packets: itemData
 							});
 						},
@@ -156,7 +166,7 @@ sap.ui.define([
 					});
 
 					ID.setValue("");
-					status.setValue("");
+					// status.setValue("");
 					stock.setValue("");
 					note.setValue("");
 					combobox.setValue("");
@@ -164,8 +174,7 @@ sap.ui.define([
 				error: function (oError) {
 					// Error
 					sap.m.MessageToast.show("Fehler -> Console");
-					console.log(oError);
-
+			
 				}
 			});
 
@@ -202,7 +211,6 @@ sap.ui.define([
 			binding.filter(filters);
 		},
 		handleSearchPacktes: function (evt) {
-
 			// create model filter
 			var filters = [];
 			var query = this.getView().byId("searchboxPacktes").getValue();
@@ -211,113 +219,66 @@ sap.ui.define([
 				var filter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, query);
 				filters.push(filter);
 			}
-
 			// update list binding
 			var list = this.getView().byId("Pakete");
 			var binding = list.getBinding("items");
 			binding.filter(filters);
 		},
 		ondeletePakets: function () {
+			var oTable = this.getView().byId("packItem");
+			var oModel = oTable.getModel();
+			// var aRows = oModel.getData().data;
+			var aContexts = oTable.getSelectedContexts();
+
+			for (var i = aContexts.length - 1; i >= 0; i--) {
+			
+				var path = aContexts[i].sPath;
+				oModel.remove(path, {
+					success: function () {
+						MessageToast.show(path + " wurde gelöscht");
+					},
+					error: function (oError) {
+						MessageToast.show("Fehelr beim Löschen");
+						
+					}
+				});
+			}
 
 		},
 		ondeleteKunde: function () {
-				var oTable = this.getView().byId("kundeTabelle");
-				var oModel = oTable.getModel();
-				// var aRows = oModel.getData().data;
-				var aContexts = oTable.getSelectedContexts();
-
-				for (var i = aContexts.length - 1; i >= 0; i--) {
-					console.log(aContexts[i].sPath);
-					var path = aContexts[i].sPath;
-					oModel.remove(path, {
-						success: function () {
-							MessageToast.show(path + " wurde gelöscht");
-						},
-						error: function (oError) {
-							MessageToast.show("Fehelr beim Löschen");
-							console.log(oError);
-						}
-					});
-				}
-				/*
-				for (var i = aContexts.length - 1; i >= 0; i--) {
-					// Selected Row
-					var oThisObj = aContexts[i].getObject();
-
-					// $.map() is used for changing the values of an array.
-					// Here we are trying to find the index of the selected row
-					// refer - http://api.jquery.com/jquery.map/
-					var index = $.map(aRows, function (obj, index) {
-
-						if (obj === oThisObj) {
-							return index;
-						}
-					});
-
-					// The splice() method adds/removes items to/from an array
-					// Here we are deleting the selected index row
-					// https://www.w3schools.com/jsref/jsref_splice.asp
-
-					aRows.splice(index, 1);
-
-					// Set the Model with the Updated Data after Deletion
-					oModel2.setData({
-						data: aRows
-					});
-		
-
-					// Reset table selection in UI5
-					oTable.removeSelections(true);
+			var oTable = this.getView().byId("Pakete");
+			var oModel = oTable.getModel();
+			var aContexts = oTable.getSelectedContexts();
+			for (var i = aContexts.length - 1; i >= 0; i--) {
+				var path = aContexts[i].sPath;
+				oModel.remove(path, {
+					success: function () {
+						MessageToast.show(path + " wurde gelöscht");
+					},
+					error: function (oError) {
+						MessageToast.show("Fehelr beim Löschen");
 					
-					
-					
-					
-				}*/
+					}
+				});
 			}
-			// setFilter: function (oContext) {
-			// 	global = oContext.getSource().getText();
-			// },
-			// handelTableDetail: function (oContext) {
-			// 	var oModelG = this.getView().getModel();
-			// 	// var tf = oModelG.read("/Packets");
-			// 	// console.log(tf);
-			// 	// var oFilter = new sap.ui.model.Filter('ID',sap.ui.model.FilterOperator.EQ, global);
+		},
+		onDeleteNewUser: function () {
 
-		// 	// oContext.getSource().bindRows({  
-		// 	//                           path : '/Packets',
-		// 	//                           filters : [oFilter]
-		// 	//  });
+			var oTable = this.getView().byId("packItem");
+			var oModel = this.getView().getModel();
+			var aContexts = oTable.getSelectedContexts();
+			for (var i = aContexts.length - 1; i >= 0; i--) {
+				oModel.remove("/Users(" + aContexts[i].getObject().ID + ")", {
+					success: function () {
+						MessageToast.show(" wurde gelöscht");
+					},
+					error: function (oError) {
+						MessageToast.show("Fehelr beim Löschen" + oError);
+					}
+				});
+			}
 
-		// 	// var list = oContext.getSource();
-		// 	// 	var binding = list.getBinding("items");
-
-		// 	// 			var filters = [];
-		// 	// 				filters.push(oFilter);
-		// 	// 	binding.filter(filters);
-		// 	// 		// console.log(oContext.getSource().getBindingContext("Packets").getProperty("status")  );
-		// }
-		// getID: function (oContext) {
-		// 		console.log("am called");
-		// 		var filters = [];
-		// 		var oFilter = new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, global);
-		// 		var list = oContext.getSource();
-		// 		var binding = list.getBinding("items");
-		// 		filters.push(oFilter);
-		// 		binding.filter(filters);
-
-		// 	}
-		// handleDetail: function (oContext) {
-		// 	// create model filter
-		// 	var filters = [];
-
-		// 		var filter = new sap.ui.model.Filter("Packets", sap.ui.model.FilterOperator.Contains, global);
-		// 		filters.push(filter);
-
-		// 	// update list binding
-		// 	var list = oContext.getSource();
-		// 	var binding = list.getBinding("items");
-		// 	binding.filter(filters);
-		// }
+		}
 
 	});
 });

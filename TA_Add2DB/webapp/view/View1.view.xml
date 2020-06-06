@@ -15,6 +15,7 @@
 													<Input width="50%" id="inputID"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
+											
 											<sap.ui.layout.form:FormElement label="Name" id="elementName">
 												<sap.ui.layout.form:fields>
 													<Input width="50%" id="inputName"/>
@@ -55,8 +56,9 @@
 						</content>
 						<Toolbar height="3rem">
 							<Button icon="sap-icon://add" text="hinzufügen" type="Emphasized" press="onAdd"/>
+							<Button icon="sap-icon://sys-minus" text="Delete Row" type="Reject" press="onDeleteNewUser"/>
 						</Toolbar>
-						<Table id="packItem" items="{/Users}">
+						<Table id="packItem" items="{/Users}" mode="MultiSelect" growing="true" growingThreshold="4">
 							<columns>
 								<Column width="12em">
 									<Text text="ID"/>
@@ -104,7 +106,11 @@
 											</sap.ui.layout.form:FormElement>
 											<sap.ui.layout.form:FormElement label="Zustand" id="elementStatus">
 												<sap.ui.layout.form:fields>
-													<Input width="50%" id="inputStatus"/>
+													<!--<Input width="50%" id="inputStatus"/>-->
+													
+													<ComboBox  width="50%" id="comboBoxinputStatus" items="{path: '/Status'}">
+														<core:Item key="{status}" text="{status}"/>
+													</ComboBox>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
 											<sap.ui.layout.form:FormElement label="Lager" id="elementLager">
@@ -274,7 +280,7 @@
 						</Bar>
 						<content>
 							<List items="{/Users}" id="List" growing="true" growingThreshold="4" growingScrollToLoad="false">
-								<StandardListItem type="Navigation" press="handleListItemPress" title="{name},{vorname}"/>
+								<StandardListItem type="Navigation" press="handleListItemPress" title="{name},{vorname},{adresse}"/>
 							</List>
 						</content>
 					</Panel>
