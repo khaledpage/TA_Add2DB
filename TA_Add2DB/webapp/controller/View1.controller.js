@@ -225,7 +225,7 @@ sap.ui.define([
 			binding.filter(filters);
 		},
 		ondeletePakets: function () {
-			var oTable = this.getView().byId("packItem");
+			var oTable = this.getView().byId("Pakete");
 			var oModel = oTable.getModel();
 			// var aRows = oModel.getData().data;
 			var aContexts = oTable.getSelectedContexts();
