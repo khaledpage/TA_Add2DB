@@ -2,7 +2,7 @@
 	xmlns:core="sap.ui.core">
 	<Shell id="shell">
 		<App id="app">
-			<pages>
+			<pages> 
 				<Page id="page" title="{i18n>title}">
 					<Panel expandable="true" expanded="false" headerText="neuen Kunden hinzufügen" width="auto" class="sapUiResponsiveMargin">
 						<content>

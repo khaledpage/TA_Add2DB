@@ -105,8 +105,8 @@ sap.ui.define([
 				},
 				error: function (oError) {
 					// Error
-					sap.m.MessageToast.show("Fehler:"+oError);
-					
+					sap.m.MessageToast.show("Fehler:" + oError);
+
 				}
 			});
 
@@ -127,10 +127,10 @@ sap.ui.define([
 
 			var ID = this.getView().byId("PaketinputID");
 			var status = this.getView().byId("comboBoxinputStatus");
-			var stock = this.getView().byId("inputNotizen");
-			var note = this.getView().byId("inputLager");
+			var note = this.getView().byId("inputNotizen");
+			var stock = this.getView().byId("inputLager");
 			var combobox = this.getView().byId("comboBoxKunde");
-					var itemRow = {
+			var itemRow = {
 				ID: parseInt(ID.getValue(), 10),
 				status: status.getSelectedKey(),
 				stock: stock.getValue(),
@@ -138,7 +138,7 @@ sap.ui.define([
 				user_ID: parseInt(combobox.getSelectedKey(), 10)
 
 			};
-
+			console.log(itemRow);
 			var oModel = this.getView().byId("AddPaket").getModel();
 			// var oModel = sap.ui.getCore().getModel();
 
@@ -152,10 +152,10 @@ sap.ui.define([
 
 					oModelG.read("/Packets(" + itemRow.ID + ")", {
 						success: function (oData2, oResponse2) {
-						var itemData = oModel.getProperty("/Packets");
+							var itemData = oModel.getProperty("/Packets");
 							// tabelle aktualisieren
 							itemData.push(oData2);
-								oModel.setData({
+							oModel.setData({
 								Packets: itemData
 							});
 						},
@@ -174,7 +174,7 @@ sap.ui.define([
 				error: function (oError) {
 					// Error
 					sap.m.MessageToast.show("Fehler -> Console");
-			
+
 				}
 			});
 
@@ -231,7 +231,7 @@ sap.ui.define([
 			var aContexts = oTable.getSelectedContexts();
 
 			for (var i = aContexts.length - 1; i >= 0; i--) {
-			
+
 				var path = aContexts[i].sPath;
 				oModel.remove(path, {
 					success: function () {
@@ -239,14 +239,14 @@ sap.ui.define([
 					},
 					error: function (oError) {
 						MessageToast.show("Fehelr beim Löschen");
-						
+
 					}
 				});
 			}
 
 		},
 		ondeleteKunde: function () {
-			var oTable = this.getView().byId("Pakete");
+			var oTable = this.getView().byId("kundeTabelle");
 			var oModel = oTable.getModel();
 			var aContexts = oTable.getSelectedContexts();
 			for (var i = aContexts.length - 1; i >= 0; i--) {
@@ -257,7 +257,7 @@ sap.ui.define([
 					},
 					error: function (oError) {
 						MessageToast.show("Fehelr beim Löschen");
-					
+
 					}
 				});
 			}
@@ -268,9 +268,16 @@ sap.ui.define([
 			var oModel = this.getView().getModel();
 			var aContexts = oTable.getSelectedContexts();
 			for (var i = aContexts.length - 1; i >= 0; i--) {
+				console.log(aContexts[i]);
 				oModel.remove("/Users(" + aContexts[i].getObject().ID + ")", {
 					success: function () {
 						MessageToast.show(" wurde gelöscht");
+
+						var TabelModel = oTable.getModel();
+						// var itemData = TabelModel.getProperty("/Users");
+						var data = {}
+						TabelModel.setData(data);
+
 					},
 					error: function (oError) {
 						MessageToast.show("Fehelr beim Löschen" + oError);

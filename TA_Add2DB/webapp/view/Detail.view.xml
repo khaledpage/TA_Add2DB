@@ -1,10 +1,10 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="TA_logistik.TA_Add2DB.controller.Detail"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-	<App>
+	<App >
 		<Page title="Kundenpakete" showNavButton="true" navButtonPress="handleNavButtonPress">
 			<List items="{/Packets}" id="thelist">
 				<items>
-					<StandardListItem title="Paket ID:{ID}" info="{note}" description="das paket hat der Zustand: {status} "/>
+					<StandardListItem title="Paket ID:{ID}" info="{note}" description="das Paket hat den Zustand: {status} "/>
 				</items>
 			</List>
 		</Page>
