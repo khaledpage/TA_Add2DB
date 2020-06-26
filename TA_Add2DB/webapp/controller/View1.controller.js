@@ -34,7 +34,7 @@ sap.ui.define([
 					status: "?"
 				}
 
-			];
+			]; 
 
 			var oModel = new sap.ui.model.json.JSONModel({
 				Users: LeereArray
