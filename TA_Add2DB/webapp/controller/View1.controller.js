@@ -18,6 +18,7 @@ sap.ui.define([
 
 			//OModelle erstellen 
 			var LeereArray = [];
+				var LeereArray2 = [];
 			var PaketZustandArr = [{
 					status: "unterwegs zur zustellung"
 				}, {
@@ -40,7 +41,7 @@ sap.ui.define([
 				Users: LeereArray
 			});
 			var oModel2 = new sap.ui.model.json.JSONModel({
-				Packets: LeereArray
+				Packets: LeereArray2
 			});
 
 			var oModel3 = new sap.ui.model.json.JSONModel({
